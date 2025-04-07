@@ -1,0 +1,39 @@
+<UserControl x:Class="VRCSaveTextManager.Controls.BaseSaveTextControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:VRCSaveTextManager.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             IsVisibleChanged="UserControl_IsVisibleChanged">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="_logFileListBox" SelectionMode="Single" Grid.Column="0" SelectionChanged="LogFileListBox_SelectionChanged" Margin="3,3,3,3">
+            </ListBox>
+            <ListBox x:Name="_saveDateTimeListBox" SelectionMode="Single" ItemStringFormat="yyyy-MM-dd HH:mm:ss" Grid.Column="2" SelectionChanged="SaveDateTimeListBox_SelectionChanged" Margin="3,3,3,3">
+            </ListBox>
+        </Grid>
+        <TextBox x:Name="_saveTextBox" IsReadOnly="True" VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="3,3,3,3" FontFamily="Consolas" TextWrapping="Wrap" HorizontalScrollBarVisibility="Disabled"/>
+        <Grid Grid.Row="2" Margin="3,3,3,3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Copy to Clipboard" FontSize="20" Padding="9,3,9,3" Click="CopyToClipboardButton_Click"></Button>
+        </Grid>
+    </Grid>
+</UserControl>

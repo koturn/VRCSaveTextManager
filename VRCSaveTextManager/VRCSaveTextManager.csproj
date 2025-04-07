@@ -1,0 +1,128 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+    <LangVersion>13</LangVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>VRSaveTextManager</Title>
+    <Version>1.0.0</Version>
+    <Authors>koturn</Authors>
+    <Company>koturn</Company>
+    <Description>Save text data manager for specific VRChat worlds.</Description>
+    <Copyright>Copyright (C) 2024 koturn All Rights Reserverd.</Copyright>
+    <PackageProjectUrl>https://github.com/koturn/VRCSaveTextManager</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/koturn/VRCSaveTextManager</RepositoryUrl>
+    <PackageTags>Windows;WPF;VRChat</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.3" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Koturn.VRChat.Log\Koturn.VRChat.Log\Koturn.VRChat.Log.csproj" />
+    <ProjectReference Include="..\Koturn.Windows.Consoles\Koturn.Windows.Consoles\Koturn.Windows.Consoles.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Controls\BulletTimeAgentSaveControl.xaml" />
+    <Page Remove="Controls\IdleCubeSaveControl.xaml" />
+    <Page Remove="Controls\IdleDefenseSaveControl.xaml" />
+    <Page Remove="Controls\IdleHomeSaveControl.xaml" />
+    <Page Remove="Controls\MagicalCursedLandSaveControl.xaml" />
+    <Page Remove="Controls\RhapsodySaveControl.xaml" />
+    <Page Remove="Controls\TerrorsOfNowhereSaveControl.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Controls\TerrorsOfNowhereSaveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Controls\MagicalCursedLandSaveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Controls\BulletTimeAgentSaveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Controls\IdleDefenseSaveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Controls\IdleHomeSaveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Controls\IdleCubeSaveControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Controls\RhapsodySaveControl.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\TerrorsOfNowhereSaveControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MagicalCursedLandSaveControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\BulletTimeAgentSaveControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\IdleDefenseSaveControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\IdleHomeSaveControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\IdleCubeSaveControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\config.sql" />
+    <EmbeddedResource Include="Resources\ddl.sql" />
+    <EmbeddedResource Include="Resources\sel_t_logfile.sql" />
+    <EmbeddedResource Include="Resources\sel_t_save_text_log_at.sql" />
+    <EmbeddedResource Include="Resources\sel_t_save_text_save.sql" />
+    <EmbeddedResource Include="Resources\upd_t_logfile.sql" />
+    <EmbeddedResource Include="Resources\ups_t_logfile.sql" />
+    <EmbeddedResource Include="Resources\ups_t_save_text_save.sql" />
+    <EmbeddedResource Include="Resources\create_view.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Internals\Extensions\" />
+  </ItemGroup>
+
+</Project>

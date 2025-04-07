@@ -1,0 +1,61 @@
+<Window x:Class="VRCSaveTextManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VRCSaveTextManager"
+        xmlns:ctrl="clr-namespace:VRCSaveTextManager.Controls"
+        mc:Ignorable="d"
+        Title="VRC Save Text Manager" Height="450" Width="800" AllowDrop="True"
+        DragOver="Window_DragOver"
+        Drop="Window_DropAsync"
+        KeyDown="Window_KeyDown">
+    <Grid Margin="3,3,3,3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="_buttonLoadLogFile" Content="Load Log File" Grid.Column="0" FontSize="20" Padding="9,3,9,3" Margin="6,3,6,3" Click="LoadLogButton_ClickAsync"></Button>
+            <CheckBox Content="Watch Log File" VerticalContentAlignment="Center" Grid.Column="1" FontSize="20" Margin="6,3,6,3" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+            <Button x:Name="_buttonVacuumAnalyze" Content="VACUUM &amp; ANALYZE" Grid.Column="3" FontSize="20" Padding="9,3,9,3" Margin="6,3,6,3" Click="ButtonVacuumAnalyze_ClickAsync"></Button>
+        </Grid>
+        <TabControl Grid.Row="1" TabStripPlacement="Left" Margin="3,3,3,3">
+            <TabItem Header="Bullet Time Agent">
+                <ctrl:BulletTimeAgentSaveControl x:Name="_bulletTimeAgentSaveControl"/>
+            </TabItem>
+            <TabItem Header="Idle Cube">
+                <ctrl:IdleCubeSaveControl x:Name="_idleCubeSaveControl"/>
+            </TabItem>
+            <TabItem Header="Idle Defense">
+                <ctrl:IdleDefenseSaveControl x:Name="_idleDefenseSaveControl"/>
+            </TabItem>
+            <TabItem Header="Idle Home">
+                <ctrl:IdleHomeSaveControl x:Name="_idleHomeSaveControl"/>
+            </TabItem>
+            <TabItem Header="Magical Cursed Land">
+                <ctrl:MagicalCursedLandSaveControl x:Name="_magicalCursedLandSaveControl"/>
+            </TabItem>
+            <TabItem Header="Rhapsody">
+                <ctrl:RhapsodySaveControl x:Name="_rhapsodySaveControl"/>
+            </TabItem>
+            <TabItem Header="Terros of Nowhere">
+                <ctrl:TerrorsOfNowhereSaveControl x:Name="_terrosOfNowhereSaveControl"/>
+            </TabItem>
+        </TabControl>
+        <StatusBar x:Name="_statusBar" Grid.Row="4">
+            <Label x:Name="_statusLabel"/>
+        </StatusBar>
+    </Grid>
+</Window>
