@@ -1,32 +1,36 @@
 SOLUTION_NAME = VRCSaveTextManager
 SOLUTION_FILE = $(SOLUTION_NAME).sln
 MAIN_PROJECT_FILE = $(SOLUTION_NAME)\$(SOLUTION_NAME).csproj
-PROJECT_OUTPUTS = $(SOLUTION_NAME)\bin $(SOLUTION_NAME)\obj
+PROJECT_DIRS = $(SOLUTION_NAME) Koturn.VRChat.Log\Koturn.VRChat.Log Koturn.Windows.Consoles\Koturn.Windows.Consoles
 ARTIFACTS_BASEDIR = Artifacts
 ARTIFACTS_SUBDIR_BASENAME = $(SOLUTION_NAME)
 ARTIFACTS_BASENAME = $(SOLUTION_NAME)
 BUILD_CONFIG = Release
-BUILD_PLATFORM = "Any CPU"
 TARGET_NET9 = net9.0-windows
 SINGLE_SUFFIX = -single
 RM = del /F /Q
+RMDIR = rmdir /S /Q
 
 
 all: build
 
 build:
-	dotnet restore -p:Platform=$(BUILD_PLATFORM) $(SOLUTION_FILE)
-	dotnet build -c $(BUILD_CONFIG) -p:Platform=$(BUILD_PLATFORM) $(SOLUTION_FILE)
+	dotnet build -c $(BUILD_CONFIG) $(SOLUTION_FILE)
+
+restore:
+	dotnet restore $(SOLUTION_FILE)
 
 deploy: deploy-$(TARGET_NET9)
 
 deploy$(SINGLE_SUFFIX): deploy-$(TARGET_NET9)$(SINGLE_SUFFIX)
 
 deploy-$(TARGET_NET9):
-	-dotnet publish -r win-x64 -c $(BUILD_CONFIG) \
-		-p:TargetFramework=$(TARGET_NET9);PublishAot=false \
-		-o $(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9) $(PROJECT_FILE)
-	$(RM) $(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)\*.pdb \
+	-dotnet publish -c $(BUILD_CONFIG) -r win-x64 \
+		-p:TargetFramework=$(TARGET_NET9) \
+		-p:PublishDir=..\$(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9) \
+		-p:PublishAot=false \
+		$(SOLUTION_FILE)
+	-$(RM) $(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)\*.pdb \
 		$(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)\*.xml \
 		$(ARTIFACTS_BASENAME)-$(TARGET_NET9).zip 2>NUL
 	cd $(ARTIFACTS_BASEDIR)
@@ -34,10 +38,14 @@ deploy-$(TARGET_NET9):
 	cd $(MAKEDIR)
 
 deploy-$(TARGET_NET9)$(SINGLE_SUFFIX):
-	-dotnet publish -r win-x64 -c $(BUILD_CONFIG) --self-contained=true \
-		-p:TargetFramework=$(TARGET_NET9);PublishAot=false;PublishSingleFile=true;PublishReadyToRun=true \
-		-o $(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)$(SINGLE_SUFFIX) $(PROJECT_FILE)
-	$(RM) $(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)$(SINGLE_SUFFIX)\*.pdb \
+	-dotnet publish -c $(BUILD_CONFIG) -r win-x64 --self-contained=true \
+		-p:TargetFramework=$(TARGET_NET9) \
+		-p:PublishDir=..\$(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)$(SINGLE_SUFFIX) \
+		-p:PublishAot=false \
+		-p:PublishSingleFile=true \
+		-p:PublishReadyToRun=true \
+		$(SOLUTION_FILE)
+	-$(RM) $(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)$(SINGLE_SUFFIX)\*.pdb \
 		$(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)$(SINGLE_SUFFIX)\*.xml \
 		$(ARTIFACTS_BASENAME)-$(TARGET_NET9)$(SINGLE_SUFFIX).zip 2>NUL
 	cd $(ARTIFACTS_BASEDIR)
@@ -45,7 +53,10 @@ deploy-$(TARGET_NET9)$(SINGLE_SUFFIX):
 	cd $(MAKEDIR)
 
 clean:
-	$(RM) $(PROJECT_OUTPUTS)
+	-for %%d in ( $(PROJECT_DIRS) ) do @( \
+		@$(RMDIR) %%d\bin %%d\obj 2>NUL \
+	)
 
-distclean:
-	$(RM) $(PROJECT_OUTPUTS) $(ARTIFACTS_BASEDIR) $(ARTIFACTS_BASENAME)-*.zip 2>NUL
+distclean: clean
+	-$(RMDIR) $(ARTIFACTS_BASEDIR) 2>NUL
+	-$(RM) $(ARTIFACTS_BASENAME)-*.zip 2>NUL
