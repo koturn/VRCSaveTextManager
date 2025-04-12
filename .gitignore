@@ -400,4 +400,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Artifacts
+Artifacts/
 *.zip
