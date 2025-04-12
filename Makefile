@@ -39,7 +39,7 @@ deploy-$(TARGET_NET9):
 	cd $(MAKEDIR)
 
 deploy-$(TARGET_NET9)$(SINGLE_SUFFIX):
-	-dotnet publish -c $(BUILD_CONFIG) -f $(TARGET_NET9) -r win-x64
+	-dotnet publish -c $(BUILD_CONFIG) -f $(TARGET_NET9) -r win-x64 \
 		-p:TargetFramework=$(TARGET_NET9) \
 		-p:PublishDir=..\$(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)$(SINGLE_SUFFIX) \
 		-p:PublishAot=false \
