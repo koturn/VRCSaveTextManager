@@ -307,15 +307,21 @@ namespace VRCSaveTextManager
         /// <param name="ex">An exception.</param>
         private static void WriteExceptionLog(Exception ex)
         {
+            var now = DateTime.Now;
+            var outputDir = Path.Combine(LocalLowDirectory, "ExceptionLog");
+            Directory.CreateDirectory(outputDir);
+            var filePath = Path.Combine(
+                outputDir,
+                $"{now:yyyy-MM-dd}_exception.log");
             lock (_lockLog)
             {
-                using (var fs = new FileStream("WindowResizerException.log", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using (var fs = new FileStream(filePath, FileMode.Append, FileAccess.Write, FileShare.Read, 4096, FileOptions.SequentialScan))
                 using (var sw = new StreamWriter(fs))
                 {
-                    sw.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff)}] {ex}");
+                    sw.WriteLine($"[{now:yyyy-MM-dd HH:mm:ss.fff)}] {ex}");
                 }
             }
-            Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff)}] {ex}");
+            Console.WriteLine($"[{now:yyyy-MM-dd HH:mm:ss.fff)}] {ex}");
         }
 
         /// <summary>
