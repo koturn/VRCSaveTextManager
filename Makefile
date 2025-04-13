@@ -6,6 +6,7 @@ ARTIFACTS_BASEDIR = Artifacts
 ARTIFACTS_SUBDIR_BASENAME = $(SOLUTION_NAME)
 ARTIFACTS_BASENAME = $(SOLUTION_NAME)
 BUILD_CONFIG = Release
+RUN_CONFIG = Debug
 TARGET_NET9 = net9.0-windows
 TARGET_NFW481 = net481
 SINGLE_SUFFIX = -single
@@ -20,6 +21,22 @@ build:
 
 restore:
 	dotnet restore $(SOLUTION_FILE)
+
+run: run-$(TARGET_NET9)
+
+run-$(TARGET_NET9):
+	-dotnet run -c $(RUN_CONFIG) --project $(SOLUTION_NAME) -f $(TARGET_NET9)
+
+run-$(TARGET_NFW481):
+	-dotnet run -c $(RUN_CONFIG) --project $(SOLUTION_NAME) -f $(TARGET_NFW481)
+
+release-run: run-$(TARGET_NET9)
+
+release-run-$(TARGET_NET9):
+	-dotnet run -c $(BUILD_CONFIG) --project $(SOLUTION_NAME) -f $(TARGET_NET9)
+
+release-run-$(TARGET_NFW481):
+	-dotnet run -c $(BUILD_CONFIG) --project $(SOLUTION_NAME) -f $(TARGET_NFW481)
 
 deploy: deploy-$(TARGET_NET9)
 
