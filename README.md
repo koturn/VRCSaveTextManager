@@ -1,6 +1,10 @@
 VRCSaveTextManager
 ==================
 
+[![.NET](https://github.com/koturn/VRCSaveTextManager/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/koturn/VRCSaveTextManager/actions/workflows/dotnet.yml)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/42i9gauayt53nvl5/branch/main?svg=true)](https://ci.appveyor.com/project/koturn/vrcsavetextmanager/branch/main)
+
 Save text data manager for specific VRChat worlds.
 This application allows you to extract and save save-data-text in VRChat log files.
 
