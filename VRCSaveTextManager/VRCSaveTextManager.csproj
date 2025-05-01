@@ -11,7 +11,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <LangVersion>13</LangVersion>
     <Title>VRSaveTextManager</Title>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>koturn</Authors>
     <Company>koturn</Company>
     <Description>Save text data manager for specific VRChat worlds.</Description>
