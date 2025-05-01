@@ -5,11 +5,11 @@
     <TargetFrameworks>net9.0-windows;net481</TargetFrameworks>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>disable</ImplicitUsings>
+    <WarningLevel>8</WarningLevel>
     <UseWPF>true</UseWPF>
     <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
-    <LangVersion>13</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <LangVersion>13</LangVersion>
     <Title>VRSaveTextManager</Title>
     <Version>1.0.0</Version>
     <Authors>koturn</Authors>
@@ -21,22 +21,6 @@
     <RepositoryUrl>https://github.com/koturn/VRCSaveTextManager</RepositoryUrl>
     <PackageTags>Windows;WPF;VRChat</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net481|AnyCPU'">
-    <WarningLevel>8</WarningLevel>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net481|AnyCPU'">
-    <WarningLevel>8</WarningLevel>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows|AnyCPU'">
-    <WarningLevel>8</WarningLevel>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows|AnyCPU'">
-    <WarningLevel>8</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -136,10 +120,6 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Internals\Extensions\" />
   </ItemGroup>
 
 </Project>
