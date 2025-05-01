@@ -7,8 +7,9 @@ ARTIFACTS_SUBDIR_BASENAME = $(SOLUTION_NAME)
 ARTIFACTS_BASENAME = $(SOLUTION_NAME)
 BUILD_CONFIG = Release
 RUN_CONFIG = Debug
-TARGET_NET9 = net9.0-windows
+TARGET_NET9 = net9.0
 TARGET_NFW481 = net481
+OS_SUFFIX = -windows
 SINGLE_SUFFIX = -single
 RM = del /F /Q
 RMDIR = rmdir /S /Q
@@ -17,7 +18,7 @@ RMDIR = rmdir /S /Q
 all: build
 
 build:
-	dotnet build -c $(BUILD_CONFIG) $(SOLUTION_FILE)
+	dotnet build -c $(BUILD_CONFIG) $(MAIN_PROJECT_FILE)
 
 restore:
 	dotnet restore $(SOLUTION_FILE)
@@ -25,25 +26,25 @@ restore:
 run: run-$(TARGET_NET9)
 
 run-$(TARGET_NET9):
-	-dotnet run -c $(RUN_CONFIG) --project $(SOLUTION_NAME) -f $(TARGET_NET9)
+	dotnet run -c $(RUN_CONFIG) --project $(MAIN_PROJECT_FILE) -f $(TARGET_NET9)$(OS_SUFFIX)
 
 run-$(TARGET_NFW481):
-	-dotnet run -c $(RUN_CONFIG) --project $(SOLUTION_NAME) -f $(TARGET_NFW481)
+	dotnet run -c $(RUN_CONFIG) --project $(MAIN_PROJECT_FILE) -f $(TARGET_NFW481)
 
 release-run: run-$(TARGET_NET9)
 
 release-run-$(TARGET_NET9):
-	-dotnet run -c $(BUILD_CONFIG) --project $(SOLUTION_NAME) -f $(TARGET_NET9)
+	dotnet run -c $(BUILD_CONFIG) --project $(MAIN_PROJECT_FILE) -f $(TARGET_NET9)$(OS_SUFFIX)
 
 release-run-$(TARGET_NFW481):
-	-dotnet run -c $(BUILD_CONFIG) --project $(SOLUTION_NAME) -f $(TARGET_NFW481)
+	dotnet run -c $(BUILD_CONFIG) --project $(MAIN_PROJECT_FILE) -f $(TARGET_NFW481)
 
 deploy: deploy-$(TARGET_NET9)
 
 deploy$(SINGLE_SUFFIX): deploy-$(TARGET_NET9)$(SINGLE_SUFFIX)
 
 deploy-$(TARGET_NET9):
-	-dotnet publish -c $(BUILD_CONFIG) -f $(TARGET_NET9) -r win-x64 --no-self-contained \
+	-dotnet publish -c $(BUILD_CONFIG) -f $(TARGET_NET9)$(OS_SUFFIX) -r win-x64 --no-self-contained \
 		-p:PublishDir=..\$(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9) \
 		-p:PublishTrimmed=false \
 		-p:PublishAot=false \
@@ -56,9 +57,8 @@ deploy-$(TARGET_NET9):
 	cd $(MAKEDIR)
 
 deploy-$(TARGET_NET9)$(SINGLE_SUFFIX):
-	-dotnet publish -c $(BUILD_CONFIG) -f $(TARGET_NET9) -r win-x64 --self-contained \
+	-dotnet publish -c $(BUILD_CONFIG) -f $(TARGET_NET9)$(OS_SUFFIX) -r win-x64 --self-contained \
 		-p:PublishDir=..\$(ARTIFACTS_BASEDIR)\$(ARTIFACTS_SUBDIR_BASENAME)-$(TARGET_NET9)$(SINGLE_SUFFIX) \
-		-p:PublishTrimmed=false \
 		-p:PublishAot=false \
 		-p:PublishSingleFile=true \
 		-p:PublishReadyToRun=true \
